@@ -414,6 +414,11 @@
                 <label>Kontakt (E-Mail)</label>
                 <input type="email" name="email" id="f_email" placeholder="optional">
               </div>
+              <div>
+                <label>⬥ Rekrutierungscode</label>
+                <input type="password" id="f_code" required autocomplete="off">
+                <div class="hint">Steht in deiner persönlichen Anwerbung. Ohne gültigen Code keine Übertragung.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -543,6 +548,9 @@
    fertige Bewerbungs-E-Mail an WARDEN_EMAIL (ohne Foto). */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mlgyadar";
 const WARDEN_EMAIL = "martin.jendrusch@gmail.com";
+/* Rekrutierungscode: nur Bewerbungen mit diesem Code werden übertragen.
+   Groß-/Kleinschreibung egal. Gib den Code deinen Spielern. */
+const ACCESS_CODE = "DECAGONE-10";
 /* ========================================== */
 
 const d10 = () => Math.floor(Math.random()*10)+1;
@@ -732,6 +740,12 @@ document.getElementById("appForm").addEventListener("submit", async e=>{
   const form = e.target, status = document.getElementById("formStatus");
   if(!form.reportValidity()) return;
   if(!currentClass){ status.textContent="FEHLER: POSITION AUSWÄHLEN (§2)"; status.className="err"; return; }
+  const code = document.getElementById("f_code").value.trim().toUpperCase();
+  if(code !== ACCESS_CODE.toUpperCase()){
+    status.textContent = "ZUGRIFF VERWEIGERT — UNGÜLTIGER REKRUTIERUNGSCODE. VORGANG WURDE PROTOKOLLIERT.";
+    status.className = "err";
+    return;
+  }
   const payload = buildPayload();
   const btn = document.getElementById("submitBtn");
 
