@@ -7,17 +7,17 @@
 <meta name="description" content="MOROI Industries. Pioniere der Tiefe. Jetzt Personal für Station DECAGONE gesucht.">
 <style>
   :root{
-    --bg:#0c0c0a;
-    --panel:#12120f;
-    --panel2:#181712;
-    --ink:#d8d2c0;
-    --dim:#8a8474;
-    --amber:#ffb000;
-    --amber-dim:#b07a10;
-    --green:#8fce8f;
+    --bg:#0e0b16;
+    --panel:#151021;
+    --panel2:#1a1428;
+    --ink:#ddd6f0;
+    --dim:#8f86ad;
+    --amber:#b49aff;
+    --amber-dim:#7a63c4;
+    --green:#d6ccf7;
     --red:#e0523c;
-    --line:#3a382e;
-    --hazard:repeating-linear-gradient(-45deg,#ffb000 0 14px,#0c0c0a 14px 28px);
+    --line:#3c3358;
+    --hazard:repeating-linear-gradient(-45deg,#b49aff 0 14px,#0e0b16 14px 28px);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -70,6 +70,32 @@
   }
   nav a:first-child{border-left:1px solid var(--line)}
   nav a:hover{color:var(--amber);background:#000;text-decoration:none}
+  nav a.cta{
+    background:var(--amber);color:#000;font-weight:700;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  nav a.cta:hover{background:var(--ink);color:#000}
+
+  /* careers emphasis */
+  #careers{background:var(--panel2)}
+  #careers .sechead h2{font-size:28px;color:var(--ink)}
+  .recruitbar{
+    background:var(--hazard);padding:8px 14px;margin-bottom:26px;
+  }
+  .recruitbar span{
+    background:#000;color:var(--amber);display:inline-block;padding:5px 14px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:.25em;text-transform:uppercase;
+  }
+  .applycta{
+    display:inline-block;margin-top:24px;padding:18px 40px;
+    background:var(--amber);color:#000 !important;text-decoration:none !important;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    font-size:17px;letter-spacing:.25em;text-transform:uppercase;
+    border:1px solid var(--ink);box-shadow:0 0 0 4px var(--bg),0 0 0 5px var(--amber-dim);
+    animation:bl 1.2s steps(2) infinite;
+  }
+  .applycta:hover{animation:none;background:var(--ink)}
 
   section{padding:52px 0;border-bottom:1px solid var(--line)}
   .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
@@ -229,11 +255,11 @@
       <!-- decagon mark -->
       <svg width="96" height="96" viewBox="0 0 100 100" aria-label="MOROI Industries decagon mark">
         <polygon points="50,3 77.6,12 94.6,35.5 94.6,64.5 77.6,88 50,97 22.4,88 5.4,64.5 5.4,35.5 22.4,12"
-                 fill="none" stroke="#ffb000" stroke-width="3"/>
+                 fill="none" stroke="#b49aff" stroke-width="3"/>
         <polygon points="50,20 68,26 79,41 79,59 68,74 50,80 32,74 21,59 21,41 32,26"
-                 fill="none" stroke="#8a8474" stroke-width="1.5"/>
-        <circle cx="50" cy="50" r="6" fill="#ffb000"/>
-        <line x1="50" y1="56" x2="50" y2="97" stroke="#ffb000" stroke-width="2"/>
+                 fill="none" stroke="#8f86ad" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="6" fill="#b49aff"/>
+        <line x1="50" y1="56" x2="50" y2="97" stroke="#b49aff" stroke-width="2"/>
       </svg>
     </div>
     <div class="brand">
@@ -249,7 +275,7 @@
     <a href="#about">Unternehmen</a>
     <a href="#facility">Station Decagone</a>
     <a href="#careers">Karriere</a>
-    <a href="#apply">Bewerben <span class="blink">▮</span></a>
+    <a href="#apply" class="cta">Bewerben <span class="blink">▮</span></a>
   </div>
 </nav>
 
@@ -291,6 +317,7 @@
 
 <section id="careers">
   <div class="wrap">
+    <div class="recruitbar"><span>Personal gesucht — sofortiger Einsatz</span></div>
     <div class="sechead"><h2>Offene Stellen</h2><span class="code">DOK 03/HR · REV 31</span></div>
     <p class="lead">MOROI Industries erweitert die Besatzung der Decagone. Wir suchen zuverlässiges
     Personal für den sofortigen Langzeiteinsatz. Attraktive Vergütung. Gefahrenzulagen. Alle
@@ -325,6 +352,7 @@
       <span class="badge">Gefahrenstufe II</span>
     </div>
     <p class="small muted">* Stufe kann ohne Vorankündigung neu klassifiziert werden.</p>
+    <div style="text-align:center"><a class="applycta" href="#apply">▶ Jetzt bewerben ◀</a></div>
   </div>
 </section>
 
