@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOROI // HR-Terminal — Foto-Decoder</title>
+<style>
+  :root{--bg:#0e0b16;--panel:#151021;--ink:#ddd6f0;--dim:#8f86ad;--acc:#b49aff;--line:#3c3358}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Courier New",ui-monospace,monospace;font-size:15px;padding:40px 20px}
+  .wrap{max-width:720px;margin:0 auto}
+  h1{font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.15em;font-size:18px;color:var(--acc);margin-bottom:6px}
+  p{color:var(--dim);font-size:13px;margin-bottom:20px}
+  textarea{width:100%;min-height:160px;background:#000;border:1px solid var(--line);color:var(--acc);font-family:inherit;font-size:12px;padding:10px;resize:vertical}
+  textarea:focus{outline:1px solid var(--acc)}
+  button{background:var(--acc);color:#000;border:none;cursor:pointer;font-family:Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:.15em;text-transform:uppercase;padding:12px 24px;margin:14px 10px 0 0}
+  button:hover{background:var(--ink)}
+  #out{margin-top:24px;display:none}
+  #out img{max-width:320px;border:1px solid var(--line);display:block;margin-bottom:14px}
+  #err{color:#e0523c;margin-top:14px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>MOROI // HR-Terminal — Foto-Decoder</h1>
+  <p>Den kompletten <code>photo_base64</code>-Wert aus der Bewerbungs-E-Mail unten einfügen
+  (mit oder ohne <code>data:image/…</code>-Anfang). Alles läuft lokal im Browser, nichts wird hochgeladen.</p>
+  <textarea id="b64" placeholder="data:image/jpeg;base64,/9j/4AAQ…" spellcheck="false"></textarea>
+  <br>
+  <button id="show">Anzeigen</button>
+  <button id="dl" style="display:none">Als JPG speichern</button>
+  <div id="err">Konnte nicht dekodiert werden — ist der String vollständig kopiert?</div>
+  <div id="out"><img id="img" alt="Bewerberfoto"></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let dataUrl = "";
+$("show").addEventListener("click", () => {
+  let s = $("b64").value.replace(/\s+/g, "");
+  if(!s) return;
+  if(!s.startsWith("data:")) s = "data:image/jpeg;base64," + s;
+  const img = $("img");
+  img.onload = () => { $("out").style.display="block"; $("dl").style.display="inline-block"; $("err").style.display="none"; };
+  img.onerror = () => { $("out").style.display="none"; $("dl").style.display="none"; $("err").style.display="block"; };
+  dataUrl = s;
+  img.src = s;
+});
+$("dl").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.href = dataUrl;
+  a.download = "bewerberfoto.jpg";
+  a.click();
+});
+</script>
+</body>
+</html>
