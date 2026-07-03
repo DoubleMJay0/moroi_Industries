@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOROI INDUSTRIES — Tiefsee-Division</title>
+<meta name="description" content="MOROI Industries. Pioniere der Tiefe. Jetzt Personal für Station DECAGONE gesucht.">
+<style>
+  :root{
+    --bg:#0c0c0a;
+    --panel:#12120f;
+    --panel2:#181712;
+    --ink:#d8d2c0;
+    --dim:#8a8474;
+    --amber:#ffb000;
+    --amber-dim:#b07a10;
+    --green:#8fce8f;
+    --red:#e0523c;
+    --line:#3a382e;
+    --hazard:repeating-linear-gradient(-45deg,#ffb000 0 14px,#0c0c0a 14px 28px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Courier New",ui-monospace,monospace;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:none;
+  }
+  /* CRT scanlines + vignette */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+    background:
+      repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
+      radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5) 100%);
+    mix-blend-mode:multiply;
+  }
+  h1,h2,h3,.disp{
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+  }
+  a{color:var(--amber);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  /* ── top classification strip ── */
+  .strip{
+    background:var(--hazard);height:10px;width:100%;
+  }
+  .classline{
+    background:#000;border-bottom:1px solid var(--line);
+    font-size:11px;letter-spacing:.25em;color:var(--amber);
+    text-transform:uppercase;text-align:center;padding:6px 8px;
+  }
+
+  /* ── header / hero ── */
+  header{border-bottom:1px solid var(--line);padding:56px 0 40px;position:relative;overflow:hidden}
+  header .wrap{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+  .logo{flex:0 0 auto}
+  .brand h1{font-size:34px;color:var(--ink);line-height:1.1}
+  .brand h1 span{color:var(--amber)}
+  .brand .tag{color:var(--dim);font-size:13px;letter-spacing:.3em;text-transform:uppercase;margin-top:6px}
+  nav{border-bottom:1px solid var(--line);background:var(--panel)}
+  nav .wrap{display:flex;gap:0;flex-wrap:wrap}
+  nav a{
+    padding:10px 18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--dim);border-right:1px solid var(--line);
+  }
+  nav a:first-child{border-left:1px solid var(--line)}
+  nav a:hover{color:var(--amber);background:#000;text-decoration:none}
+
+  section{padding:52px 0;border-bottom:1px solid var(--line)}
+  .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .sechead h2{font-size:19px;color:var(--amber)}
+  .sechead .code{color:var(--dim);font-size:11px;letter-spacing:.2em}
+  .sechead::after{content:"";flex:1;border-bottom:1px dashed var(--line)}
+
+  p.lead{font-size:16px;max-width:66ch}
+  .muted{color:var(--dim)}
+  .small{font-size:12px}
+
+  /* ── data panels ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:26px}
+  .panel{
+    background:var(--panel);border:1px solid var(--line);padding:18px 16px;position:relative;
+  }
+  .panel::before{
+    content:attr(data-tab);position:absolute;top:-1px;left:-1px;
+    background:var(--line);color:var(--ink);font-size:10px;letter-spacing:.2em;
+    padding:2px 8px;text-transform:uppercase;
+  }
+  .panel h3{font-size:13px;color:var(--amber);margin:14px 0 8px}
+  .panel p{font-size:13px;color:var(--dim)}
+  .stat-big{font-size:30px;color:var(--green);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700}
+
+  table.spec{width:100%;border-collapse:collapse;margin-top:18px;font-size:13px}
+  table.spec td{border:1px solid var(--line);padding:8px 12px;vertical-align:top}
+  table.spec td:first-child{color:var(--dim);text-transform:uppercase;font-size:11px;letter-spacing:.15em;width:38%;background:var(--panel)}
+
+  /* ── careers ── */
+  .job{border:1px solid var(--line);background:var(--panel);margin-bottom:14px;padding:18px}
+  .job h3{color:var(--ink);font-size:15px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .job h3 .ref{color:var(--dim);font-size:11px;letter-spacing:.15em}
+  .job p{font-size:13px;color:var(--dim);margin-top:8px;max-width:70ch}
+  .badge{display:inline-block;border:1px solid var(--amber-dim);color:var(--amber);font-size:10px;letter-spacing:.2em;padding:2px 8px;text-transform:uppercase;margin-top:10px}
+
+  /* ── form ── */
+  form{background:var(--panel);border:1px solid var(--line);padding:0;margin-top:10px}
+  .formhead{
+    background:var(--hazard);padding:10px 18px;
+  }
+  .formhead span{
+    background:#000;color:var(--amber);display:inline-block;padding:4px 14px;
+    font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  }
+  fieldset{border:none;border-bottom:1px dashed var(--line);padding:24px 22px}
+  legend{
+    float:left;width:100%;padding:0 0 14px;color:var(--amber);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    text-transform:uppercase;letter-spacing:.15em;font-size:13px;
+  }
+  legend .idx{color:var(--dim);margin-right:10px}
+  label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--dim);margin-bottom:5px}
+  input[type=text],input[type=email],select,textarea{
+    width:100%;background:#000;border:1px solid var(--line);color:var(--green);
+    font-family:inherit;font-size:15px;padding:9px 10px;border-radius:0;
+  }
+  input:focus,select:focus,textarea:focus{outline:1px solid var(--amber);border-color:var(--amber)}
+  textarea{min-height:110px;resize:vertical}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px}
+  .row:last-child{margin-bottom:0}
+  .hint{font-size:11px;color:var(--dim);margin-top:4px;text-transform:none;letter-spacing:0}
+
+  /* photo badge */
+  .badgebox{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  .photo{
+    width:140px;height:170px;border:1px solid var(--line);background:#000;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    color:var(--dim);font-size:10px;text-align:center;letter-spacing:.15em;text-transform:uppercase;
+    filter:contrast(1.15) saturate(.6);
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) contrast(1.2) sepia(.25)}
+  .filebtn{
+    display:inline-block;background:var(--amber);color:#000;border:none;cursor:pointer;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    font-size:12px;letter-spacing:.15em;text-transform:uppercase;padding:10px 16px;
+  }
+  .filebtn:hover{background:var(--ink)}
+  input[type=file]{display:none}
+
+  /* class cards */
+  .classes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  .cc{border:1px solid var(--line);background:#000;padding:14px;cursor:pointer;position:relative}
+  .cc input{position:absolute;opacity:0}
+  .cc h4{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.15em;color:var(--ink);text-transform:uppercase}
+  .cc .role{color:var(--dim);font-size:11px;margin:6px 0 8px;min-height:30px}
+  .cc .mods{color:var(--green);font-size:11px;white-space:pre-line}
+  .cc.sel{border-color:var(--amber);outline:1px solid var(--amber)}
+  .cc.sel h4{color:var(--amber)}
+  .psych{border:1px dashed var(--amber-dim);padding:12px 14px;margin-top:16px;font-size:12px;color:var(--dim);display:none}
+  .psych b{color:var(--amber)}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .stat{border:1px solid var(--line);background:#000;padding:12px;text-align:center}
+  .stat label{margin-bottom:8px}
+  .stat .val{font-size:26px;color:var(--green);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;min-height:34px}
+  .stat .base{font-size:10px;color:var(--dim);min-height:14px}
+  .rollbtn{
+    background:none;border:1px solid var(--amber-dim);color:var(--amber);cursor:pointer;
+    font-family:inherit;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    padding:4px 10px;margin-top:8px;
+  }
+  .rollbtn:hover{background:var(--amber);color:#000}
+  .rollall{
+    background:var(--amber);border:none;color:#000;cursor:pointer;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:12px 22px;margin-bottom:18px;
+  }
+  .rollall:hover{background:var(--ink)}
+  .choice{margin-top:16px;display:none}
+
+  /* skills */
+  .autoskills{font-size:13px;color:var(--green);border:1px solid var(--line);background:#000;padding:10px 14px;margin-bottom:16px}
+  .autoskills b{color:var(--dim);font-weight:normal;font-size:11px;text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:4px}
+  #skillPicks .row{margin-bottom:12px}
+
+  /* submit */
+  .submitrow{padding:26px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .bigbtn{
+    background:var(--amber);color:#000;border:none;cursor:pointer;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+    font-size:15px;letter-spacing:.2em;text-transform:uppercase;padding:16px 34px;
+  }
+  .bigbtn:hover{background:var(--green)}
+  .bigbtn:disabled{background:var(--dim);cursor:wait}
+  .consent{display:flex;gap:10px;align-items:flex-start;padding:20px 22px;font-size:12px;color:var(--dim)}
+  .consent input{margin-top:3px;accent-color:var(--amber)}
+  #formStatus{font-size:13px;letter-spacing:.1em}
+  #formStatus.ok{color:var(--green)}
+  #formStatus.err{color:var(--red)}
+
+  /* success overlay */
+  #stamped{
+    display:none;border:3px double var(--green);color:var(--green);
+    padding:40px 24px;text-align:center;margin-top:10px;background:var(--panel);
+  }
+  #stamped h2{font-size:22px;letter-spacing:.3em;margin-bottom:12px}
+  #stamped p{color:var(--dim);font-size:13px}
+
+  footer{padding:40px 0 60px;color:var(--dim);font-size:11px}
+  footer .wrap{display:grid;gap:8px}
+  .blink{animation:bl 1.2s steps(2) infinite}
+  @keyframes bl{50%{opacity:0}}
+  @media print{body::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="strip"></div>
+<div class="classline">MOROI INDUSTRIES ¦ ÖFFENTLICHKEITS-TERMINAL 04-C ¦ NICHT KLASSIFIZIERT ¦ STANDARD-ANZEIGEPROTOKOLL</div>
+
+<header>
+  <div class="wrap">
+    <div class="logo">
+      <!-- decagon mark -->
+      <svg width="96" height="96" viewBox="0 0 100 100" aria-label="MOROI Industries decagon mark">
+        <polygon points="50,3 77.6,12 94.6,35.5 94.6,64.5 77.6,88 50,97 22.4,88 5.4,64.5 5.4,35.5 22.4,12"
+                 fill="none" stroke="#ffb000" stroke-width="3"/>
+        <polygon points="50,20 68,26 79,41 79,59 68,74 50,80 32,74 21,59 21,41 32,26"
+                 fill="none" stroke="#8a8474" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="6" fill="#ffb000"/>
+        <line x1="50" y1="56" x2="50" y2="97" stroke="#ffb000" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="brand">
+      <h1>MOROI<span> INDUSTRIES</span></h1>
+      <div class="tag">Tiefsee-Division · Gegr. 2087</div>
+      <div class="tag" style="color:var(--amber)">„DIE ZUKUNFT LIEGT IN DER TIEFE.“</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#about">Unternehmen</a>
+    <a href="#facility">Station Decagone</a>
+    <a href="#careers">Karriere</a>
+    <a href="#apply">Bewerben <span class="blink">▮</span></a>
+  </div>
+</nav>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sechead"><h2>Unternehmensprofil</h2><span class="code">DOK 01/A · REV 12</span></div>
+    <p class="lead">MOROI Industries ist ein voll lizenzierter Auftragnehmer für Tiefseeforschung
+    und Ressourcenerschließung. Seit vier Jahrzehnten liefern wir verlässliche Ergebnisse in
+    Geothermie, mariner Biotechnologie und abyssaler Werkstoffkunde — sicher, leise und
+    termingerecht.</p>
+    <div class="grid">
+      <div class="panel" data-tab="abb.01"><div class="stat-big">11.000m</div><h3>Einsatztiefe</h3><p>Zertifizierte Kollisionstiefe unserer Habitate der HORIZON-Klasse. Tiefer als alle anderen. Tiefer als nötig.</p></div>
+      <div class="panel" data-tab="abb.02"><div class="stat-big">99,2%</div><h3>Rückkehrquote</h3><p>Ein branchenführender Wert, an dessen Aufrundung wir intensiv arbeiten.</p></div>
+      <div class="panel" data-tab="abb.03"><div class="stat-big">24/7</div><h3>Betriebszeit</h3><p>Unsere Anlagen schlafen nie. Der Ozean auch nicht. Wir finden das poetisch.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="facility">
+  <div class="wrap">
+    <div class="sechead"><h2>Station DECAGONE</h2><span class="code">DOK 02/F · REV 07</span></div>
+    <p class="lead">Unsere submerse Forschungsanlage und ganzer Stolz des Unternehmens. Zehn
+    Druckmodule in der ikonischen dekagonalen Anordnung, der die Station ihren Namen verdankt.
+    Decagone beherbergt Langzeitstudien zu hydrothermaler Chemie, Schwachlicht-Ökosystemen und
+    Strukturwerkstoffen unter Extremdruck.</p>
+    <table class="spec">
+      <tr><td>Bezeichnung</td><td>DSRF-10 „DECAGONE“</td></tr>
+      <tr><td>Konfiguration</td><td>10 Module / zentraler Versorgungskern / 3 Moon Pools</td></tr>
+      <tr><td>Besatzung</td><td>Ausgelegt für 60 Personen + synthetisches Unterstützungspersonal</td></tr>
+      <tr><td>Primärauftrag</td><td>Angewandte Forschung. Details nach dem Onboarding.</td></tr>
+      <tr><td>Ausstattung</td><td>Private Kojen, Kantine (zwei warme Mahlzeiten täglich), Freizeitmodul, Kapelle (multireligiös, stillgelegt, Lagerraum)</td></tr>
+      <tr><td>Sicherheitsbilanz</td><td>Vorbildlich. Aufzeichnungen vor 2098 extern archiviert.</td></tr>
+    </table>
+    <p class="small muted" style="margin-top:14px">Oberflächentransfers erfolgen quartalsweise.
+    Private Kommunikation läuft über Richtstrahl-Uplink und unterliegt routinemäßiger
+    Inhaltsprüfung.</p>
+  </div>
+</section>
+
+<section id="careers">
+  <div class="wrap">
+    <div class="sechead"><h2>Offene Stellen</h2><span class="code">DOK 03/HR · REV 31</span></div>
+    <p class="lead">MOROI Industries erweitert die Besatzung der Decagone. Wir suchen zuverlässiges
+    Personal für den sofortigen Langzeiteinsatz. Attraktive Vergütung. Gefahrenzulagen. Alle
+    Mahlzeiten inklusive.</p>
+
+    <div class="job" style="margin-top:26px">
+      <h3>Sicherheitsspezialist:in — MARINE <span class="ref">REF: DC-SEC-04</span></h3>
+      <p>Schutz von Firmeneigentum und Personal. Vorherige militärische oder werkschutzliche
+      Dienstzeit erforderlich. Bewerber sollten mit engen Räumen, schwachem Licht und dem
+      Befolgen von Anweisungen ohne ausgiebige Rückfragen vertraut sein.</p>
+      <span class="badge">Gefahrenstufe II</span>
+    </div>
+    <div class="job">
+      <h3>Synthetik-Einheit — ANDROID <span class="ref">REF: DC-SYN-02</span></h3>
+      <p>MOROI heißt synthetische Kolleginnen und Kollegen willkommen. Einheiten müssen gültige
+      Eigentums- oder Selbsteigentumsnachweise vorlegen. Emotionssimulationspakete sind optional,
+      werden von menschlichen Mitarbeitenden aber geschätzt. Meistens.</p>
+      <span class="badge">Gefahrenstufe I</span>
+    </div>
+    <div class="job">
+      <h3>Forschungspersonal — SCIENTIST <span class="ref">REF: DC-RES-11</span></h3>
+      <p>Beaufsichtigte Forschung in einer einmaligen Umgebung. Hochschulabschluss erforderlich.
+      Neugier ist erwünscht — innerhalb der in Anhang K definierten Grenzen (Ausgabe nach
+      Ankunft).</p>
+      <span class="badge">Gefahrenstufe I*</span>
+    </div>
+    <div class="job">
+      <h3>Stationsbetrieb — TEAMSTER <span class="ref">REF: DC-OPS-19</span></h3>
+      <p>Hält die Decagone am Laufen: Fracht, Wartung, Vortrieb, Moon-Pool-Betrieb. Wenn es
+      leckt, brummt oder klemmt, reparierst du es. Das Rückgrat des Unternehmens. Der Ozean
+      respektiert Kompetenz.</p>
+      <span class="badge">Gefahrenstufe II</span>
+    </div>
+    <p class="small muted">* Stufe kann ohne Vorankündigung neu klassifiziert werden.</p>
+  </div>
+</section>
+
+<section id="apply">
+  <div class="wrap">
+    <div class="sechead"><h2>Bewerbung um Anstellung</h2><span class="code">FORMBLATT HR-77/D</span></div>
+    <p class="small muted" style="margin-bottom:18px">Alle Abschnitte ausfüllen. Gefälschte Angaben
+    werden entdeckt. Mit ⬥ markierte Felder sind Pflichtfelder. Eignungswerte werden durch
+    zertifizierte Zufallsprüfung (unten) ermittelt — verhandeln Sie nicht mit den Würfeln.</p>
+
+    <form id="appForm" novalidate>
+      <div class="formhead"><span>MOROI INDUSTRIES — PERSONALANFORDERUNG</span></div>
+
+      <!-- 1. identity -->
+      <fieldset>
+        <legend><span class="idx">§1</span>Identität der Bewerberin / des Bewerbers</legend>
+        <div class="badgebox">
+          <div>
+            <div class="photo" id="photoBox">KEIN BILD<br>HINTERLEGT</div>
+            <div style="margin-top:10px">
+              <label class="filebtn" for="photoInput">ID-Foto hochladen</label>
+              <input type="file" id="photoInput" accept="image/*">
+            </div>
+            <div class="hint" style="max-width:150px">Frontal. Neutraler Gesichtsausdruck. Synthetics: eingeschaltet.</div>
+          </div>
+          <div style="flex:1;min-width:240px">
+            <div class="row">
+              <div>
+                <label>⬥ Vollständiger Name / Einheitskennung</label>
+                <input type="text" name="character_name" id="f_name" required>
+              </div>
+              <div>
+                <label>Pronomen</label>
+                <input type="text" name="pronouns" id="f_pronouns" placeholder="z. B. sie/ihr, es/sein">
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>⬥ Geschlecht / Klassifikation</label>
+                <select name="gender" id="f_gender" required>
+                  <option value="">— auswählen —</option>
+                  <option>Weiblich</option>
+                  <option>Männlich</option>
+                  <option>Nichtbinär</option>
+                  <option>Android (synthetisch)</option>
+                  <option>Keine Angabe</option>
+                  <option>Sonstiges (siehe Statement)</option>
+                </select>
+              </div>
+              <div>
+                <label>⬥ Spielername <span style="text-transform:none">(dein echter Name)</span></label>
+                <input type="text" name="player_name" id="f_player" required>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>Kontakt (E-Mail)</label>
+                <input type="email" name="email" id="f_email" placeholder="optional">
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 2. position -->
+      <fieldset>
+        <legend><span class="idx">§2</span>Angestrebte Position</legend>
+        <div class="classes" id="classCards">
+          <label class="cc"><input type="radio" name="class" value="Marine" required>
+            <h4>Marine</h4><div class="role">Sicherheitsspezialist:in<br>REF DC-SEC-04</div>
+            <div class="mods">+10 Combat
++10 Body Save
++20 Fear Save
++1 Max Wound</div></label>
+          <label class="cc"><input type="radio" name="class" value="Android">
+            <h4>Android</h4><div class="role">Synthetik-Einheit<br>REF DC-SYN-02</div>
+            <div class="mods">+20 Intellect
+−10 auf 1 Stat
++60 Fear Save
++1 Max Wound</div></label>
+          <label class="cc"><input type="radio" name="class" value="Scientist">
+            <h4>Scientist</h4><div class="role">Forschungspersonal<br>REF DC-RES-11</div>
+            <div class="mods">+10 Intellect
++5 auf 1 Stat
++30 Sanity Save</div></label>
+          <label class="cc"><input type="radio" name="class" value="Teamster">
+            <h4>Teamster</h4><div class="role">Stationsbetrieb<br>REF DC-OPS-19</div>
+            <div class="mods">+5 alle Stats
++10 alle Saves</div></label>
+        </div>
+        <div class="psych" id="psychNote"></div>
+        <div class="choice" id="choiceBox">
+          <label id="choiceLabel"></label>
+          <select id="choiceStat" name="stat_choice" style="max-width:260px">
+            <option value="">— Stat auswählen —</option>
+            <option>Strength</option><option>Speed</option><option>Intellect</option><option>Combat</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <!-- 3. aptitude -->
+      <fieldset>
+        <legend><span class="idx">§3</span>Zertifizierte Eignungsprüfung</legend>
+        <button type="button" class="rollall" id="rollAll">▸ Komplette Prüfung durchführen (alles würfeln)</button>
+        <p class="hint" style="margin-bottom:14px">Stats: 2D10+25 · Saves: 2D10+10 · Health: 1D10+10 · Credits: 2D10×10. Die Modifikatoren deiner Position aus §2 werden automatisch verrechnet. Einzelwürfe über die WÜRFELN-Buttons.</p>
+        <div class="stats" id="statGrid">
+          <div class="stat"><label>Strength</label><div class="val" id="v_strength">—</div><div class="base" id="b_strength"></div><button type="button" class="rollbtn" data-roll="strength">Würfeln</button></div>
+          <div class="stat"><label>Speed</label><div class="val" id="v_speed">—</div><div class="base" id="b_speed"></div><button type="button" class="rollbtn" data-roll="speed">Würfeln</button></div>
+          <div class="stat"><label>Intellect</label><div class="val" id="v_intellect">—</div><div class="base" id="b_intellect"></div><button type="button" class="rollbtn" data-roll="intellect">Würfeln</button></div>
+          <div class="stat"><label>Combat</label><div class="val" id="v_combat">—</div><div class="base" id="b_combat"></div><button type="button" class="rollbtn" data-roll="combat">Würfeln</button></div>
+          <div class="stat"><label>Sanity Save</label><div class="val" id="v_sanity">—</div><div class="base" id="b_sanity"></div><button type="button" class="rollbtn" data-roll="sanity">Würfeln</button></div>
+          <div class="stat"><label>Fear Save</label><div class="val" id="v_fear">—</div><div class="base" id="b_fear"></div><button type="button" class="rollbtn" data-roll="fear">Würfeln</button></div>
+          <div class="stat"><label>Body Save</label><div class="val" id="v_body">—</div><div class="base" id="b_body"></div><button type="button" class="rollbtn" data-roll="body">Würfeln</button></div>
+          <div class="stat"><label>Max Health</label><div class="val" id="v_health">—</div><div class="base" id="b_health"></div><button type="button" class="rollbtn" data-roll="health">Würfeln</button></div>
+          <div class="stat"><label>Max Wounds</label><div class="val" id="v_wounds">2</div><div class="base"></div></div>
+          <div class="stat"><label>Stress (Start)</label><div class="val" style="color:var(--dim)">2</div><div class="base"></div></div>
+          <div class="stat"><label>Credits</label><div class="val" id="v_credits">—</div><div class="base" id="b_credits"></div><button type="button" class="rollbtn" data-roll="credits">Würfeln</button></div>
+        </div>
+      </fieldset>
+
+      <!-- 4. skills -->
+      <fieldset>
+        <legend><span class="idx">§4</span>Zertifizierte Skills &amp; Ausbildung</legend>
+        <div class="autoskills" id="autoSkills"><b>Positionsausbildung (automatisch)</b>Wähle zuerst in §2 eine Position.</div>
+        <div id="skillPicks"></div>
+        <p class="hint">Master/Expert Skills setzen mindestens einen Prerequisite-Skill voraus (siehe Character Profile). Der Warden prüft das bei der „Einstellung“.</p>
+      </fieldset>
+
+      <!-- 5. personal effects -->
+      <fieldset>
+        <legend><span class="idx">§5</span>Persönliche Gegenstände (optional)</legend>
+        <div class="row">
+          <div><label>Trinket</label><input type="text" name="trinket" placeholder="wird bei der Einweisung zugeteilt, falls leer"></div>
+          <div><label>Patch</label><input type="text" name="patch" placeholder="wird bei der Einweisung zugeteilt, falls leer"></div>
+        </div>
+        <div class="row">
+          <div><label>Loadout (falls schon gewürfelt)</label><input type="text" name="loadout" placeholder="S. 7 — oder leer lassen"></div>
+        </div>
+      </fieldset>
+
+      <!-- 6. statement -->
+      <fieldset>
+        <legend><span class="idx">§6</span>Persönliches Statement</legend>
+        <label>⬥ Warum möchten Sie auf Station Decagone arbeiten? Wer ist dein Charakter? (Kurzvita, Motivation, Macken)</label>
+        <textarea name="statement" id="f_statement" required></textarea>
+      </fieldset>
+
+      <div class="consent">
+        <input type="checkbox" id="consent" required>
+        <span>Hiermit versichere ich die Richtigkeit der obigen Angaben und trete MOROI Industries
+        unwiderruflich das Erstverwertungsrecht an meiner Person, meinen persönlichen Effekten
+        sowie meinen biologischen oder synthetischen Überresten ab — für die Dauer der Anstellung
+        zuzüglich neunundneunzig (99) Jahren. Ich habe Anhang K gelesen.
+        <b style="color:var(--amber)">(Niemand hat Anhang K gelesen.)</b></span>
+      </div>
+
+      <div class="submitrow">
+        <button type="submit" class="bigbtn" id="submitBtn">Bewerbung absenden</button>
+        <span id="formStatus"></span>
+      </div>
+    </form>
+
+    <div id="stamped">
+      <h2>■ BEWERBUNG EINGEGANGEN ■</h2>
+      <p>Ihre Akte wurde an die Personalabteilung, Tiefsee-Division, weitergeleitet.<br>
+      Kontaktieren Sie uns nicht. Wir kontaktieren Sie. Willkommen an Bord.<br><br>
+      <span style="color:var(--green)">MOROI INDUSTRIES — DIE ZUKUNFT LIEGT IN DER TIEFE.</span></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>MOROI INDUSTRIES © 2126 · Eine hundertprozentige Tochtergesellschaft ihrer selbst.</div>
+    <div>Terminal 04-C · Zu Unterhaltungszwecken · Inoffizieller Fan-Content zum Mothership® Sci-Fi Horror RPG (Tuesday Knight Games).</div>
+    <div>Keine Rückerstattung. Kein Druck. Na gut — etwas Druck. Ca. 110 MPa.</div>
+  </div>
+</footer>
+
+<script>
+/* ================= CONFIG =================
+   1) Kostenlosen Account bei https://formspree.io anlegen
+   2) Neues Form erstellen, Endpoint hier eintragen, z.B.:
+      const FORMSPREE_ENDPOINT = "https://formspree.io/f/abcdwxyz";
+   Solange leer, öffnet der Submit-Button stattdessen eine
+   fertige Bewerbungs-E-Mail an WARDEN_EMAIL (ohne Foto). */
+const FORMSPREE_ENDPOINT = "";
+const WARDEN_EMAIL = "martin.jendrusch@gmail.com";
+/* ========================================== */
+
+const d10 = () => Math.floor(Math.random()*10)+1;
+const rolls = { strength:null, speed:null, intellect:null, combat:null,
+                sanity:null, fear:null, body:null, health:null, credits:null };
+const ROLLDEF = {
+  strength:()=>d10()+d10()+25, speed:()=>d10()+d10()+25,
+  intellect:()=>d10()+d10()+25, combat:()=>d10()+d10()+25,
+  sanity:()=>d10()+d10()+10, fear:()=>d10()+d10()+10, body:()=>d10()+d10()+10,
+  health:()=>d10()+10, credits:()=>(d10()+d10())*10
+};
+
+/* class data */
+const CLASSES = {
+  Marine:{
+    mods:{combat:10, body:10, fear:20}, wounds:3, choice:null,
+    psych:"<b>Psychologischer Vermerk (Trauma Response):</b> Wenn du in Panik gerätst, muss jeder nahe befreundete Spieler einen Fear Save ablegen.",
+    auto:["Military Training","Athletics"],
+    picks:[{label:"Bonus: 1 Expert Skill ODER 2 Trained Skills — Wahl 1",pool:"te"},
+           {label:"Wahl 2 (nur falls 2× Trained)",pool:"t",opt:true}]
+  },
+  Android:{
+    mods:{intellect:20, fear:60}, wounds:3, choice:{label:"−10 auf einen Stat deiner Wahl:",sign:-10},
+    psych:"<b>Psychologischer Vermerk (Trauma Response):</b> Fear Saves naher befreundeter Spieler haben Disadvantage.",
+    auto:["Linguistics","Computers","Mathematics"],
+    picks:[{label:"Bonus: 1 Expert Skill ODER 2 Trained Skills — Wahl 1",pool:"te"},
+           {label:"Wahl 2 (nur falls 2× Trained)",pool:"t",opt:true}]
+  },
+  Scientist:{
+    mods:{intellect:10, sanity:30}, wounds:2, choice:{label:"+5 auf einen Stat deiner Wahl:",sign:5},
+    psych:"<b>Psychologischer Vermerk (Trauma Response):</b> Wenn du einen Sanity Save nicht schaffst, erhalten alle nahen befreundeten Spieler 1 Stress.",
+    auto:[],
+    picks:[{label:"1 Master Skill",pool:"m"},
+           {label:"Expert Skill (Prerequisite des Masters)",pool:"e"},
+           {label:"Trained Skill (Prerequisite)",pool:"t"},
+           {label:"Bonus: 1 Trained Skill",pool:"t"}]
+  },
+  Teamster:{
+    mods:{strength:5, speed:5, intellect:5, combat:5, sanity:10, fear:10, body:10}, wounds:2, choice:null,
+    psych:"<b>Psychologischer Vermerk (Trauma Response):</b> Einmal pro Session darfst du einen Panic Check mit Advantage ablegen.",
+    auto:["Industrial Equipment","Zero-G"],
+    picks:[{label:"Bonus: 1 Trained Skill",pool:"t"},
+           {label:"Bonus: 1 Expert Skill",pool:"e"}]
+  }
+};
+const SKILLS = {
+  t:["Linguistics","Zoology","Botany","Geology","Industrial Equipment","Jury-Rigging","Chemistry","Computers","Zero-G","Mathematics","Art","Archaeology","Theology","Military Training","Rimwise","Athletics"],
+  e:["Psychology","Pathology","Field Medicine","Ecology","Asteroid Mining","Mechanical Repair","Explosives","Pharmacology","Hacking","Piloting","Physics","Mysticism","Wilderness Survival","Firearms","Hand-to-Hand Combat"],
+  m:["Sophontology","Exobiology","Surgery","Planetology","Robotics","Engineering","Cybernetics","Artificial Intelligence","Hyperspace","Xenoesotericism","Command"]
+};
+SKILLS.te = [...SKILLS.t.map(s=>s+" (Trained)"),...SKILLS.e.map(s=>s+" (Expert)")];
+
+let currentClass = null, photoData = "";
+
+function selectedChoiceStat(){ return document.getElementById("choiceStat").value.toLowerCase(); }
+
+function finalValue(key){
+  if(rolls[key]==null) return null;
+  if(key==="credits"||key==="health") return rolls[key];
+  let v = rolls[key];
+  const c = currentClass && CLASSES[currentClass];
+  if(c){
+    if(c.mods[key]) v += c.mods[key];
+    if(c.choice && selectedChoiceStat()===key) v += c.choice.sign;
+  }
+  return v;
+}
+
+function render(){
+  for(const key of Object.keys(rolls)){
+    const el = document.getElementById("v_"+key), b = document.getElementById("b_"+key);
+    if(!el) continue;
+    const f = finalValue(key);
+    el.textContent = f==null ? "—" : (key==="credits" ? f+"cr" : f);
+    if(b){
+      if(f!=null && f!==rolls[key]) b.textContent = "Basis "+rolls[key];
+      else b.textContent = "";
+    }
+  }
+  document.getElementById("v_wounds").textContent =
+    currentClass ? CLASSES[currentClass].wounds : 2;
+}
+
+document.querySelectorAll(".rollbtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const k = btn.dataset.roll;
+    rolls[k] = ROLLDEF[k]();
+    render();
+  });
+});
+document.getElementById("rollAll").addEventListener("click",()=>{
+  for(const k of Object.keys(ROLLDEF)) rolls[k] = ROLLDEF[k]();
+  render();
+});
+document.getElementById("choiceStat").addEventListener("change",render);
+
+/* class selection */
+document.querySelectorAll("#classCards input").forEach(r=>{
+  r.addEventListener("change",()=>{
+    currentClass = r.value;
+    document.querySelectorAll(".cc").forEach(c=>c.classList.toggle("sel",c.contains(r)));
+    const c = CLASSES[currentClass];
+    const psy = document.getElementById("psychNote");
+    psy.innerHTML = c.psych; psy.style.display = "block";
+    const cb = document.getElementById("choiceBox");
+    if(c.choice){
+      cb.style.display = "block";
+      document.getElementById("choiceLabel").textContent = c.choice.label;
+    } else {
+      cb.style.display = "none";
+      document.getElementById("choiceStat").value = "";
+    }
+    /* skills */
+    document.getElementById("autoSkills").innerHTML =
+      "<b>Positionsausbildung (automatisch)</b>" +
+      (c.auto.length ? c.auto.join(" · ") : "Scientist: Deine Skills ergeben sich aus der Master-Wahl unten.");
+    const picks = document.getElementById("skillPicks");
+    picks.innerHTML = "";
+    c.picks.forEach((p,i)=>{
+      const opts = SKILLS[p.pool].map(s=>`<option>${s}</option>`).join("");
+      picks.insertAdjacentHTML("beforeend",
+        `<div class="row"><div><label>${p.label}</label>
+         <select name="skill_${i+1}" data-skill><option value="">—${p.opt?" optional —":" auswählen —"}</option>${opts}</select>
+         </div></div>`);
+    });
+    render();
+  });
+});
+
+/* photo: resize client-side to keep submission small */
+document.getElementById("photoInput").addEventListener("change",e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const img = new Image();
+  img.onload = ()=>{
+    const c = document.createElement("canvas");
+    const scale = Math.min(1, 480/Math.max(img.width,img.height));
+    c.width = Math.round(img.width*scale); c.height = Math.round(img.height*scale);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    photoData = c.toDataURL("image/jpeg",0.7);
+    document.getElementById("photoBox").innerHTML = `<img src="${photoData}" alt="Bewerberfoto">`;
+    URL.revokeObjectURL(img.src);
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+/* build application payload */
+function buildPayload(){
+  const g = id => document.getElementById(id).value.trim();
+  const skills = [...document.querySelectorAll("[data-skill]")]
+    .map(s=>s.value).filter(Boolean);
+  const stat = k => finalValue(k) ?? "not rolled";
+  return {
+    _subject: `MOROI Bewerbung: ${g("f_name")} (${currentClass||"?"}) von ${g("f_player")}`,
+    character_name: g("f_name"),
+    pronouns: g("f_pronouns"),
+    gender: document.getElementById("f_gender").value,
+    player_name: g("f_player"),
+    contact_email: g("f_email"),
+    class: currentClass || "",
+    stat_choice: document.getElementById("choiceStat").value,
+    strength: stat("strength"), speed: stat("speed"),
+    intellect: stat("intellect"), combat: stat("combat"),
+    sanity_save: stat("sanity"), fear_save: stat("fear"), body_save: stat("body"),
+    max_health: stat("health"),
+    max_wounds: currentClass ? CLASSES[currentClass].wounds : 2,
+    credits: stat("credits"),
+    skills: skills.join(", "),
+    trinket: document.querySelector("[name=trinket]").value,
+    patch: document.querySelector("[name=patch]").value,
+    loadout: document.querySelector("[name=loadout]").value,
+    statement: g("f_statement"),
+    photo_base64: photoData || "none"
+  };
+}
+
+function payloadAsText(p){
+  return Object.entries(p)
+    .filter(([k])=>!k.startsWith("_") && k!=="photo_base64")
+    .map(([k,v])=>`${k.toUpperCase().replace(/_/g," ")}: ${v}`)
+    .join("\n");
+}
+
+/* submit */
+document.getElementById("appForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const form = e.target, status = document.getElementById("formStatus");
+  if(!form.reportValidity()) return;
+  if(!currentClass){ status.textContent="FEHLER: POSITION AUSWÄHLEN (§2)"; status.className="err"; return; }
+  const payload = buildPayload();
+  const btn = document.getElementById("submitBtn");
+
+  if(!FORMSPREE_ENDPOINT){
+    /* fallback: pre-filled email */
+    const body = encodeURIComponent(
+      "MOROI INDUSTRIES — PERSONALANFORDERUNG HR-77/D\n" +
+      "================================================\n" + payloadAsText(payload) +
+      "\n\n(Foto bitte als Anhang beilegen.)");
+    location.href = `mailto:${WARDEN_EMAIL}?subject=${encodeURIComponent(payload._subject)}&body=${body}`;
+    status.textContent = "E-MAIL-PROGRAMM GEÖFFNET — ZUM ABSCHLUSS SENDEN.";
+    status.className = "ok";
+    return;
+  }
+
+  btn.disabled = true; status.textContent = "ÜBERTRAGUNG LÄUFT…"; status.className="";
+  try{
+    const res = await fetch(FORMSPREE_ENDPOINT,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "Accept":"application/json" },
+      body: JSON.stringify(payload)
+    });
+    if(res.ok){
+      form.style.display="none";
+      document.getElementById("stamped").style.display="block";
+      document.getElementById("stamped").scrollIntoView({behavior:"smooth"});
+    } else {
+      const err = await res.json().catch(()=>({}));
+      status.textContent = "ÜBERTRAGUNGSFEHLER: " + (err.errors?.map(x=>x.message).join("; ") || res.status);
+      status.className = "err";
+    }
+  }catch(err){
+    status.textContent = "UPLINK-AUSFALL — BITTE ERNEUT VERSUCHEN.";
+    status.className = "err";
+  }finally{ btn.disabled = false; }
+});
+</script>
+</body>
+</html>
