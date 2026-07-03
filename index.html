@@ -149,6 +149,7 @@
     text-transform:uppercase;letter-spacing:.15em;font-size:13px;
   }
   legend .idx{color:var(--dim);margin-right:10px}
+  fieldset > *:not(legend){clear:both}
   label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--dim);margin-bottom:5px}
   input[type=text],input[type=email],select,textarea{
     width:100%;background:#000;border:1px solid var(--line);color:var(--green);
@@ -202,6 +203,7 @@
   }
   .rollbtn:hover{background:var(--amber);color:#000}
   .rollall{
+    display:block;
     background:var(--amber);border:none;color:#000;cursor:pointer;
     font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
     font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:12px 22px;margin-bottom:18px;
